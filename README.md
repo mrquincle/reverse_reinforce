@@ -11,11 +11,18 @@ Results are currently not yet in the form of a controller, because the prototype
 
 The results are in the form of a picture in which we show that the preferences between observations are learned indeed. The outcome of the rank SVM should be monotonically decreasing, just as our actual preferences. As indicated before, only relative preferences are important to - in the end - have the robot move towards observations with a higher preference. Hence, the lines in this figure do not need to have a minimum standard error, only the feature of having it monotonically decreasing is important.
 
-![Prediction comparison](https://github.com/mrquincle/reverse_reinforce/raw/master/run0/prediction_comparison.png "Prediction comparison")
+![Prediction comparison](https://github.com/mrquincle/reverse_reinforce/raw/master/infrared/run0/prediction_comparison.png "Prediction comparison")
 
 For people that are into reinforcement learning: we now obtained the value function (which assigns a reward/cost to each state). However, we also need a controller. A controller can follow a greedy policy picking the best action at every state. However, to do this it needs a model of the environment: it needs to know in which state it will end up after executing a certain action. To build a controller a delayed transition model can be used in case of only a few actions (left, right, ahead) and a camera (see second paper below). It returns a new state (in this case an observation matrix, a shifted image) given an old state and an action. The cost of this shifted observation can be obtained through the value function.
 
-The problem with infared sensors is that the shift in the observation vector when going to the right or left is not known beforehand. Different from images it is hard to come up with something that says, ah it is gonna shift k pixels when I perform action X.
+The problem with infared sensors is that the shift in the observation vector when going to the right or left is not known beforehand. Different from images it is hard to come up with something that says, "ah it is gonna shift k pixels when I perform action X".
+
+## What needs to be done? ##
+
+We need to search for:
+
+* A proper representation of the state/observation space with respect to actions. Observations on a very fine granular level or not needed if we only have rough actions to our proposal.
+* Transition model learning using a method that requires very few runs
 
 ## Acknowledgments
 All original ideas and concepts on how to solve the docking problem between two robots come from Michele Sebag and her colleagues from the machine learning group at INRIA / University of Paris.
